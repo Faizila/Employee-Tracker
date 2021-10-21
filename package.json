@@ -1,5 +1,5 @@
 {
-  "name": "Employee-Tracker",
+  "name": "tracker",
   "version": "1.0.0",
   "description": "A command line application that allows the user to manipulate data in a SQL database.",
   "main": "server.js",
@@ -21,6 +21,7 @@
   "dependencies": {
     "console.table": "^0.10.0",
     "inquirer": "^8.2.0",
+    "mysql": "^2.18.1",
     "mysql2": "^2.3.2"
   }
 }
