@@ -17,7 +17,7 @@ const db = mysql.createConnection(
     },
     console.log("***********************************"),
     console.log("*           WELCOME TO            *"),
-    console.log("*        EMPLOYEE TRACKER         *"),
+    console.log("*   EMPLOYEE MANAGEMENT SYSTEM    *"),
     console.log("*                                 *"),
     console.log("***********************************")
   );
@@ -37,10 +37,10 @@ function search() {
               "View all employees",
               "Add a department",
               "Add a role",
-              "Add a employee",
+              "Add an employee",
               "Update an employee role",
               "Update employee managers",
-              "Remove a employee"              
+              "Remove an employee"              
           ]
         });
       }
