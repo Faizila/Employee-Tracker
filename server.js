@@ -32,15 +32,15 @@ function search() {
           type: "list",
           message: "What would you like to do?",
           choices: [
+              "View all departments",
+              "View all roles",
               "View all employees",
-              "View employees by department",
-              "View employees by manager",
-              "Add Department",
-              "Add employee",
-              "Add Role",
-              "Update employee role",
+              "Add a department",
+              "Add a role",
+              "Add a employee",
+              "Update an employee role",
               "Update employee managers",
-              "Remove employee"              
+              "Remove a employee"              
           ]
         });
       }
