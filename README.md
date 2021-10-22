@@ -4,7 +4,7 @@ A command line application that allows the user to manipulate data in a SQL data
 
 # Description
 
-
+Employee Management System is a command line application that allows the user to manipulate data in a SQL database.
 
 # Table of Contents
 

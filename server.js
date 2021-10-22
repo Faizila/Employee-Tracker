@@ -22,3 +22,26 @@ const db = mysql.createConnection(
     console.log("***********************************")
   );
 
+search();
+
+  // Function for inquirer to prompt questions
+function search() {
+  inquirer
+      .prompt({
+          name: "action",
+          type: "list",
+          message: "What would you like to do?",
+          choices: [
+              "View all employees",
+              "View employees by department",
+              "View employees by manager",
+              "Add Department",
+              "Add employee",
+              "Add Role",
+              "Update employee role",
+              "Update employee managers",
+              "Remove employee"              
+          ]
+        });
+      }
+
