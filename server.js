@@ -105,8 +105,21 @@ function viewEmployees() {
 };
 
 function addDepartment() {
-
-  search(); 
+  inquirer
+  .prompt([{
+      name: "title",
+      type: "input",
+      message: "What is the name of new Department?",
+  }, 
+])
+  .then((answers) => {
+      db.query(`INSERT INTO department (name) VALUES ("${answers.title}")`, (err, data) => {
+              if (err) throw err;
+              console.log("New department added!");
+              search();
+          }
+      );
+  });
 };
 
 function addRole() {
