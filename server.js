@@ -38,7 +38,7 @@ const search = () => {
               "Add Employee",
               "Update an Employee Role",
               "Update Employee Managers",
-              "Remove an Employee",
+              "Remove a Department",
               "EXIT"              
           ]
         })
@@ -69,8 +69,8 @@ const search = () => {
               case 'Update Employee Managers':
                   updateEmployeeManagers();
               break;
-              case 'Remove an Employee':
-                  removeEmployee();
+              case 'Remove a Department':
+                  removeDepartment();
               break;
               case 'EXIT':
                   console.log('Thank You!');
@@ -225,11 +225,32 @@ function updateEmployeeManagers() {
   search(); 
 };
 
-function removeEmployee() {
-
-  search(); 
+function removeDepartment() {
+  db.query("SELECT id, name FROM department", (err, res) => {
+    if (err) throw err;
+    const dept = res.map((department) => {
+        return {
+            name: department.name,
+            value: department.id,
+        };
+    });
+    inquirer
+        .prompt([{
+            type: "list",
+            name: "removeDepartment",
+            choices: dept,
+            message: "Which department would you like to remove?",
+        }, ])
+        .then((answers) => {
+          db.query(`DELETE FROM department WHERE id = ${answers.removeDepartment}`, (err, data) => {
+                    if (err) throw err;
+                    console.log("Department Removed!");
+                    search();
+                }
+            );
+        });
+}); 
 }
-
 };
 
 search();
