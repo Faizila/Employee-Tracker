@@ -11,7 +11,7 @@ const db = mysql.createConnection(
       // MySQL username,
       user: 'root',
       // MySQL password
-      password: '',
+      password: '123456',
       // database name
       database: 'employees_db'
     },
@@ -23,7 +23,7 @@ const db = mysql.createConnection(
   );
 
   // Function for inquirer to prompt questions
-function search() {
+const search = () => {
   inquirer
       .prompt({
           name: "action",
@@ -42,9 +42,9 @@ function search() {
               "EXIT"              
           ]
         })
-        .then((res) => {
-          console.log(res);
-          switch (res) {
+        .then((answer) => {
+               console.log(answer.action);
+          switch (answer.action) {
               case 'View all Departments':
                   viewDepartments();
               break;
@@ -74,42 +74,64 @@ function search() {
               break;
               case 'EXIT':
                   console.log('Finish!');
+              break;
+              default:
+                    console.log(`Invalid action: ${answer.action}`);
+                    break;
             }
         });
 
+// Query database
 function viewDepartments() {
-    
+  db.query('SELECT * FROM department', function (err, results) {
+  // Display query results using console.table
+  console.table(results);
+  });  
+  search(); 
 };
         
 function viewRoles() {
-            
+  db.query('SELECT * FROM role', function (err, results) {
+  console.table(results);
+  });       
+  search();    
 };
         
 function viewEmployees() {
-        
+  db.query('SELECT * FROM employee', function (err, results) {
+  console.table(results);
+  });
+  search();   
 };
 
 function addDepartment() {
-    
+ 
+  search(); 
 };
 
 function addRole() {
     
+  search(); 
 };
 
 function addEmployee() {
 
+  search(); 
 };
 
 function updateEmployeeRole() {
     
+  search(); 
 };
 
 function updateEmployeeManagers() {
     
+  search(); 
 };
 
 function removeEmployee() {
+
+  search(); 
 }
 
 };
