@@ -2,7 +2,7 @@ USE employees_db;
 
 INSERT INTO department (name)
 VALUES 
-('Information Systems and Technology'),
+('Information Technology'),
 ('Finance'),
 ('Legal'),
 ('Human Resources'),
@@ -20,9 +20,9 @@ VALUES
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES 
-('John', 'Doe', 1, 568),
-('Ronald', 'Wilson', 2, 347),
-('David', 'Miller', 3, 796),
-('Mary', 'Hall', 4, 134),
-('Linda', 'Young', 5, 594),
-('Nick', 'Morrison', 6, 137);
+('John', 'Doe', 1, 1),
+('Ronald', 'Wilson', 2, 2),
+('David', 'Miller', 3, 3),
+('Mary', 'Hall', 4, 4),
+('Linda', 'Young', 5, 5),
+('Nick', 'Morrison', 6, 6);
