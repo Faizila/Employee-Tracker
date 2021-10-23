@@ -73,7 +73,7 @@ const search = () => {
                   removeEmployee();
               break;
               case 'EXIT':
-                  console.log('Finish!');
+                  console.log('Thank You!');
               break;
               default:
                     console.log(`Invalid action: ${answer.action}`);
@@ -110,8 +110,51 @@ function addDepartment() {
 };
 
 function addRole() {
-    
-  search(); 
+  // Query to get department names
+  db.query("SELECT id, name FROM department", (err, res) => {
+    if (err) throw err;
+    const dept = res.map((department) => {
+        return {
+            name: department.name,
+            value: department.id,
+        };
+    });
+    inquirer
+        .prompt([{
+                name: "title",
+                type: "list",
+                message: "What is employee's role?",
+                choices: ['Web Developer',
+                          'Accountant',
+                          'Paralegal',
+                          'Manager',
+                          'Engineer',
+                          'Sales Rep']
+            },
+            {
+                name: "salary",
+                type: "input",
+                message: "What is the employees's salary?",
+            },
+            {
+                name: "department",
+                type: "list",
+                message: "What is the name of employee's department?",
+                choices: dept,
+            },
+        ])
+        .then((answers) => {
+            db.query(
+                `INSERT INTO role (title, salary, department_id) VALUES ("${answers.title}", ${answers.salary}, ${answers.department})`,
+                (err, data) => {
+                    if (err) throw err;
+                    console.log("Employee role added!");
+                    search();
+                }
+            );
+        });
+});   
+ 
 };
 
 function addEmployee() {
