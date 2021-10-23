@@ -81,22 +81,26 @@ const search = () => {
             }
         });
 
-// Query database
+
+// view all departments
 function viewDepartments() {
+   // Query database
   db.query('SELECT * FROM department', function (err, results) {
   // Display query results using console.table
   console.table(results);
   });  
   search(); 
 };
-        
+
+// view all roles
 function viewRoles() {
   db.query('SELECT * FROM role', function (err, results) {
   console.table(results);
   });       
   search();    
 };
-        
+
+// view all employees
 function viewEmployees() {
   db.query('SELECT * FROM employee', function (err, results) {
   console.table(results);
@@ -104,6 +108,7 @@ function viewEmployees() {
   search();   
 };
 
+// add a department
 function addDepartment() {
   inquirer
   .prompt([{
@@ -113,6 +118,7 @@ function addDepartment() {
   }, 
 ])
   .then((answers) => {
+      // Query database
       db.query(`INSERT INTO department (name) VALUES ("${answers.title}")`, (err, data) => {
               if (err) throw err;
               console.log("New department added!");
@@ -122,8 +128,9 @@ function addDepartment() {
   });
 };
 
+// add a role
 function addRole() {
-  // Query to get department names
+  // Query database
   db.query("SELECT id, name FROM department", (err, res) => {
     if (err) throw err;
     const dept = res.map((department) => {
@@ -157,8 +164,8 @@ function addRole() {
             },
         ])
         .then((answers) => {
-            db.query(
-                `INSERT INTO role (title, salary, department_id) VALUES ("${answers.title}", ${answers.salary}, ${answers.department})`,
+            // Query database
+            db.query(`INSERT INTO role (title, salary, department_id) VALUES ("${answers.title}", ${answers.salary}, ${answers.department})`,
                 (err, data) => {
                     if (err) throw err;
                     console.log("Employee role added!");
@@ -170,6 +177,7 @@ function addRole() {
  
 };
 
+// add an employee
 function addEmployee() {
   db.query("SELECT id, title FROM role", (err, res) => {
     if (err) throw err;
@@ -203,8 +211,7 @@ function addEmployee() {
             },
         ])
         .then((answers) => {
-            db.query(
-                `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("${answers.first_name}", "${answers.last_name}", ${answers.role}, ${answers.manager})`,
+            db.query(`INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("${answers.first_name}", "${answers.last_name}", ${answers.role}, ${answers.manager})`,
                 (err, data) => {
                     if (err) throw err;
                     console.log("Employee added!");
@@ -215,9 +222,47 @@ function addEmployee() {
 });
 };
 
+// update an employee role
 function updateEmployeeRole() {
-    
-  search(); 
+    // Query database
+    db.query("select*,a.id as empID, concat(first_name, \" \", last_name) as concatName from employee a left join role b on a.role_id = b.id", (err, res) => {
+    if (err) throw err;
+    // map method
+    const employeeUpdate = res.map((employeeUpdate) => {
+        return {
+            name: employeeUpdate.concatName,
+            value: employeeUpdate.empID,
+        };
+    });
+    const roleUpdate = res.map((roleUpdate) => {
+        return {
+            name: roleUpdate.title,
+            value: roleUpdate.id,
+        };
+    });
+    inquirer
+        .prompt([{
+                name: "employee",
+                type: "list",
+                message: "Which employee do you want to update?",
+                choices: employeeUpdate,
+            },
+            {
+                name: "newRole",
+                type: "list",
+                message: "What is employee's new role?",
+                choices: roleUpdate,
+            },
+        ])
+        .then((answers) => {
+            db.query(`UPDATE employee SET role_id = ${answers.newRole} where employee.id = ${answers.employee}`, (err, data) => {
+                    if (err) throw err;
+                    console.log("Employee's new role updated!");
+                    search();
+                }
+            );
+        });
+});
 };
 
 function updateEmployeeManagers() {
@@ -225,6 +270,7 @@ function updateEmployeeManagers() {
   search(); 
 };
 
+// Delete Department
 function removeDepartment() {
   db.query("SELECT id, name FROM department", (err, res) => {
     if (err) throw err;
