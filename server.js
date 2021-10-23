@@ -105,7 +105,7 @@ function viewEmployees() {
 };
 
 function addDepartment() {
- 
+
   search(); 
 };
 
@@ -115,8 +115,48 @@ function addRole() {
 };
 
 function addEmployee() {
-
-  search(); 
+  db.query("SELECT id, title FROM role", (err, res) => {
+    if (err) throw err;
+    const role = res.map((role) => {
+        return {
+            name: role.title,
+            value: role.id,
+        };
+    });
+    inquirer
+        .prompt([{
+                name: "first_name",
+                type: "input",
+                message: "What is employee first name?",
+            },
+            {
+                name: "last_name",
+                type: "input",
+                message: "What is employee last name?",
+            },
+            {
+                name: "role",
+                type: "list",
+                message: "What is employee's role?",
+                choices: role,
+            },
+            {
+                name: "manager",
+                type: "input",
+                message: "Who is their manager(id format):",
+            },
+        ])
+        .then((answers) => {
+            db.query(
+                `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("${answers.first_name}", "${answers.last_name}", ${answers.role}, ${answers.manager})`,
+                (err, data) => {
+                    if (err) throw err;
+                    console.log("Employee added!");
+                    search();
+                }
+            );
+        });
+});
 };
 
 function updateEmployeeRole() {
