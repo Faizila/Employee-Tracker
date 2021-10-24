@@ -39,11 +39,11 @@ const search = () => {
               "Update an Employee Role",
               "View Employees By Department",
               "Remove Department",
+              "View Department Budget",
               "EXIT"              
           ]
         })
         .then((answer) => {
-               console.log(answer.action);
           switch (answer.action) {
               case 'View all Departments':
                   viewDepartments();
@@ -72,11 +72,14 @@ const search = () => {
               case 'Remove Department':
                   removeDepartment();
               break;
+              case 'View Department Budget':
+                  viewDepartmentBudget();
+              break;
               case 'EXIT':
                   console.log('Thank You!');
               break;
               default:
-                    console.log(`Invalid action: ${answer.action}`);
+                  console.log(`Invalid action: ${answer.action}`);
                     break;
             }
         });
@@ -297,7 +300,8 @@ function removeDepartment() {
             name: "removeDepartment",
             choices: dept,
             message: "Which department would you like to remove?",
-        }, ])
+        }, 
+    ])
         .then((answers) => {
           db.query(`DELETE FROM department WHERE id = ${answers.removeDepartment}`, (err, data) => {
                     if (err) throw err;
@@ -308,6 +312,22 @@ function removeDepartment() {
         });
 }); 
 }
+};
+
+// view department budget
+function viewDepartmentBudget(){
+    const sql = `SELECT department_id AS Id, 
+                        department.name AS Department,
+                        SUM(salary) AS Budget
+                 FROM  role  
+                 JOIN department ON role.department_id = department.id GROUP BY  department_id`;
+    
+    db.query(sql, (err, rows) => {
+      if (err) throw err; 
+      console.table(rows);
+  
+      search(); 
+    });     
 };
 
 search();
