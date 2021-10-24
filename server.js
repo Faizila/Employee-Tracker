@@ -37,8 +37,8 @@ const search = () => {
               "Add Role",
               "Add Employee",
               "Update an Employee Role",
-              "Update Employee Managers",
-              "Remove a Department",
+              "View Employees By Department",
+              "Remove Department",
               "EXIT"              
           ]
         })
@@ -66,10 +66,10 @@ const search = () => {
               case 'Update an Employee Role':
                   updateEmployeeRole();
               break;
-              case 'Update Employee Managers':
-                  updateEmployeeManagers();
+              case 'View Employees By Department':
+                viewEmployeesByDepartment();
               break;
-              case 'Remove a Department':
+              case 'Remove Department':
                   removeDepartment();
               break;
               case 'EXIT':
@@ -265,9 +265,20 @@ function updateEmployeeRole() {
 });
 };
 
-function updateEmployeeManagers() {
-    
-  search(); 
+// View employees by department
+function viewEmployeesByDepartment() {
+    const sql = `SELECT employee.first_name AS firstName, 
+                        employee.last_name AS lastName, 
+                        department.name AS Department
+                 FROM employee 
+                 LEFT JOIN role ON employee.role_id = role.id 
+                 LEFT JOIN department ON role.department_id = department.id`;
+  
+    db.query(sql, (err, rows) => {
+      if (err) throw err; 
+      console.table(rows); 
+      search();
+    });          
 };
 
 // Delete Department
