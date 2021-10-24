@@ -1,7 +1,7 @@
 // Dependencies
 const mysql = require('mysql2');
 const inquirer = require("inquirer");
-const consoleTable = require("console.table");
+const cTable = require('console.table');
 
 // Connect to database
 const db = mysql.createConnection(
@@ -90,6 +90,7 @@ function viewDepartments() {
    // Query database
   db.query('SELECT * FROM department', function (err, results) {
   // Display query results using console.table
+  console.log("All Departments");
   console.table(results);
   });  
   search(); 
@@ -98,6 +99,7 @@ function viewDepartments() {
 // view all roles
 function viewRoles() {
   db.query('SELECT * FROM role', function (err, results) {
+  console.log("All Roles");    
   console.table(results);
   });       
   search();    
@@ -106,7 +108,8 @@ function viewRoles() {
 // view all employees
 function viewEmployees() {
   db.query('SELECT * FROM employee', function (err, results) {
-  console.table(results);
+    console.log("All Employees");
+    console.table(results);
   });
   search();   
 };
@@ -279,6 +282,7 @@ function viewEmployeesByDepartment() {
   
     db.query(sql, (err, rows) => {
       if (err) throw err; 
+      console.log("Employees by Department");
       console.table(rows); 
       search();
     });          
@@ -323,7 +327,8 @@ function viewDepartmentBudget(){
                  JOIN department ON role.department_id = department.id GROUP BY  department_id`;
     
     db.query(sql, (err, rows) => {
-      if (err) throw err; 
+      if (err) throw err;
+      console.log("Department Budget"); 
       console.table(rows);
   
       search(); 
