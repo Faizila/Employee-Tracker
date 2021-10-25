@@ -52,7 +52,10 @@ The application will be invoked by using the following command:
 ```bash
 npm start
 ```
-THEN user is prompted with the following options: view all departments, view all roles, view all employees, add a department, add a role, add an employee, update an employee role, update employee managers, and remove an employee.    
+THEN user is prompted with the following options: view all departments, view all roles, view all employees, add department, add role, add employee, update an employee role, view all employees by department, remove department, view department budget and exit.    
+
+![start](https://user-images.githubusercontent.com/78191579/138712675-5f511926-25b1-4750-980d-3c8a8d729e4a.JPG)
+
 
 # License
 
