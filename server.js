@@ -6,7 +6,9 @@ const cTable = require('console.table');
 // Connect to database
 const db = mysql.createConnection(
     {
+     // host
       host: 'localhost',
+     // port
       port: 3306,
       // MySQL username,
       user: 'root',
@@ -15,6 +17,7 @@ const db = mysql.createConnection(
       // database name
       database: 'employees_db'
     },
+    // UI
     console.log("***********************************"),
     console.log("*           WELCOME TO            *"),
     console.log("*   EMPLOYEE MANAGEMENT SYSTEM    *"),
@@ -29,6 +32,7 @@ const search = () => {
           name: "action",
           type: "list",
           message: "What would you like to do?",
+        // choices for user
           choices: [
               "View all Departments",
               "View all Roles",
@@ -43,7 +47,9 @@ const search = () => {
               "EXIT"              
           ]
         })
+        // promise
         .then((answer) => {
+            // switch statement
           switch (answer.action) {
               case 'View all Departments':
                   viewDepartments();
@@ -78,6 +84,7 @@ const search = () => {
               case 'EXIT':
                   console.log('Thank You!');
               break;
+            // default
               default:
                   console.log(`Invalid action: ${answer.action}`);
                     break;
@@ -85,49 +92,60 @@ const search = () => {
         });
 
 
-// view all departments
+// function to view all departments
 function viewDepartments() {
-   // Query database
+   // Query database to view department table
   db.query('SELECT * FROM department', function (err, results) {
-  // Display query results using console.table
-  console.log("All Departments");
+  console.log("\nAll Departments\n");
+  // Display query results in table format using console.table
   console.table(results);
-  });  
+  }); 
+ // calling function    
   search(); 
 };
 
-// view all roles
+// function to view all roles
 function viewRoles() {
+  // Query database to view role table
   db.query('SELECT * FROM role', function (err, results) {
-  console.log("All Roles");    
+  console.log("\nAll Roles\n");    
+  // Display results in table format
   console.table(results);
   });       
+// calling function
   search();    
 };
 
 // view all employees
 function viewEmployees() {
-  db.query('SELECT * FROM employee', function (err, results) {
-    console.log("All Employees");
+    // Query database to view employee table
+    db.query('SELECT * FROM employee', function (err, results) {
+    console.log("\nAll Employees\n");
+    // Display results in table format
     console.table(results);
   });
+// calling function
   search();   
 };
 
-// add a department
+// function to add a department
 function addDepartment() {
-  inquirer
+    // inquirer to prompt questions
+    inquirer
   .prompt([{
       name: "title",
       type: "input",
       message: "What is the name of new Department?",
   }, 
 ])
+// promise
   .then((answers) => {
-      // Query database
+      // Query database to insert value in department table
       db.query(`INSERT INTO department (name) VALUES ("${answers.title}")`, (err, data) => {
-              if (err) throw err;
-              console.log("New department added!");
+        // catch error 
+        if (err) throw err;
+              console.log("\nNew department added!\n");
+            // calling function
               search();
           }
       );
@@ -136,15 +154,18 @@ function addDepartment() {
 
 // add a role
 function addRole() {
-  // Query database
+  // Query database to select id and name from department table
   db.query("SELECT id, name FROM department", (err, res) => {
+   // catch error    
     if (err) throw err;
+    // map
     const dept = res.map((department) => {
         return {
             name: department.name,
             value: department.id,
         };
     });
+    // inquirer to prompt questions
     inquirer
         .prompt([{
                 name: "title",
@@ -169,12 +190,14 @@ function addRole() {
                 choices: dept,
             },
         ])
+        // promise
         .then((answers) => {
-            // Query database
-            db.query(`INSERT INTO role (title, salary, department_id) VALUES ("${answers.title}", ${answers.salary}, ${answers.department})`,
-                (err, data) => {
-                    if (err) throw err;
-                    console.log("Employee role added!");
+            // Query database to insert in role table
+            db.query(`INSERT INTO role (title, salary, department_id) VALUES ("${answers.title}", ${answers.salary}, ${answers.department})`, (err, data) => {
+                // catch error 
+                if (err) throw err;
+                    console.log("\nEmployee role added!\n");
+                    // calling function
                     search();
                 }
             );
@@ -183,16 +206,20 @@ function addRole() {
  
 };
 
-// add an employee
+// function to add an employee
 function addEmployee() {
+    // Query database to select id and title from role table
   db.query("SELECT id, title FROM role", (err, res) => {
+    // catch error
     if (err) throw err;
+    // map
     const role = res.map((role) => {
         return {
             name: role.title,
             value: role.id,
         };
     });
+    // inquirer to prompt questions
     inquirer
         .prompt([{
                 name: "first_name",
@@ -216,36 +243,41 @@ function addEmployee() {
                 message: "Who is their manager(id format):",
             },
         ])
+        // promise
         .then((answers) => {
-            db.query(`INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("${answers.first_name}", "${answers.last_name}", ${answers.role}, ${answers.manager})`,
-                (err, data) => {
-                    if (err) throw err;
-                    console.log("Employee added!");
-                    search();
+            // query database to insert in employee table
+            db.query(`INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("${answers.first_name}", "${answers.last_name}", ${answers.role}, ${answers.manager})`, (err, data) => {
+                // catch error   
+                if (err) throw err;
+                console.log("\nEmployee added!\n");
+                // calling function
+                search();
                 }
             );
         });
 });
 };
 
-// update an employee role
+// function to update an employee role
 function updateEmployeeRole() {
-    // Query database
+    // Query database and doing Concatenation
     db.query("select*,a.id as empID, concat(first_name, \" \", last_name) as concatName from employee a left join role b on a.role_id = b.id", (err, res) => {
     if (err) throw err;
-    // map method
+    // map
     const employeeUpdate = res.map((employeeUpdate) => {
         return {
             name: employeeUpdate.concatName,
             value: employeeUpdate.empID,
         };
     });
+    // map
     const roleUpdate = res.map((roleUpdate) => {
         return {
             name: roleUpdate.title,
             value: roleUpdate.id,
         };
     });
+    // inquirer to prompt questions
     inquirer
         .prompt([{
                 name: "employee",
@@ -261,43 +293,54 @@ function updateEmployeeRole() {
             },
         ])
         .then((answers) => {
+            // Query database and updating employee role
             db.query(`UPDATE employee SET role_id = ${answers.newRole} where employee.id = ${answers.employee}`, (err, data) => {
-                    if (err) throw err;
-                    console.log("Employee's new role updated!");
-                    search();
+                // catch error 
+                if (err) throw err;
+                console.log("\nEmployee's new role updated!\n");
+                // calling function
+                search();
                 }
             );
         });
 });
 };
 
-// View employees by department
+// function to view employees by department
 function viewEmployeesByDepartment() {
-    const sql = `SELECT employee.first_name AS firstName, 
+    // joining tables
+    const vebd = `SELECT employee.first_name AS firstName, 
                         employee.last_name AS lastName, 
                         department.name AS Department
                  FROM employee 
                  LEFT JOIN role ON employee.role_id = role.id 
                  LEFT JOIN department ON role.department_id = department.id`;
-  
-    db.query(sql, (err, rows) => {
-      if (err) throw err; 
-      console.log("Employees by Department");
-      console.table(rows); 
+    // Query database
+    db.query(vebd, (err, res) => {
+        // catch error
+        if (err) throw err; 
+      console.log("\nEmployees by Department\n");
+    // Display results in table format
+      console.table(res); 
+    // calling function
       search();
     });          
 };
 
-// Delete Department
+// function to delete Department
 function removeDepartment() {
+    // Query database select id and name from department
   db.query("SELECT id, name FROM department", (err, res) => {
+    // catch error
     if (err) throw err;
+    // map
     const dept = res.map((department) => {
         return {
             name: department.name,
             value: department.id,
         };
     });
+    // inquirer to prompt questions
     inquirer
         .prompt([{
             type: "list",
@@ -307,10 +350,13 @@ function removeDepartment() {
         }, 
     ])
         .then((answers) => {
+          // Query database delete from department table
           db.query(`DELETE FROM department WHERE id = ${answers.removeDepartment}`, (err, data) => {
-                    if (err) throw err;
-                    console.log("Department Removed!");
-                    search();
+            // catch error 
+            if (err) throw err;
+            console.log("\nDepartment Removed!\n");
+            // calling function
+            search();
                 }
             );
         });
@@ -318,21 +364,25 @@ function removeDepartment() {
 }
 };
 
-// view department budget
+// function to view department overall budget
 function viewDepartmentBudget(){
-    const sql = `SELECT department_id AS Id, 
+    // JOIN & GROUP BY
+    const vdb = `SELECT department_id AS Id, 
                         department.name AS Department,
                         SUM(salary) AS Budget
                  FROM  role  
-                 JOIN department ON role.department_id = department.id GROUP BY  department_id`;
-    
-    db.query(sql, (err, rows) => {
+                 JOIN department ON role.department_id = department.id GROUP BY department_id`;
+    // Query database
+    db.query(vdb, (err, rows) => {
+    // catch error
       if (err) throw err;
-      console.log("Department Budget"); 
+      console.log("\nDepartment Budget\n"); 
+      // Display results in table format
       console.table(rows);
-  
+    // calling function
       search(); 
     });     
 };
 
+// calling search function
 search();
