@@ -57,7 +57,7 @@ THEN user is prompted with the following options: view all departments, view all
 
 # Link
 
-Refer to Video section for walkthrough video links on functionality.
+Refer to Video section for walkthrough video link on functionality.
 
 # Screenshots
 
