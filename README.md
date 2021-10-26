@@ -53,13 +53,19 @@ npm start
 ```
 THEN user is prompted with the following options: view all departments, view all roles, view all employees, add department, add role, add employee, update an employee role, view all employees by department, remove department, view department budget and exit.    
 
-![start](https://user-images.githubusercontent.com/78191579/138712675-5f511926-25b1-4750-980d-3c8a8d729e4a.JPG)
+![start](https://user-images.githubusercontent.com/78191579/138790896-79caa295-0ef4-4574-8709-2ee9f5d50059.JPG)
 
 # Link
 
 Refer to Video section for walkthrough video links on functionality.
 
 # Screenshots
+
+![start](https://user-images.githubusercontent.com/78191579/138790896-79caa295-0ef4-4574-8709-2ee9f5d50059.JPG)
+![1](https://user-images.githubusercontent.com/78191579/138790901-73fad5d0-a447-412f-b672-765e52333717.JPG)
+![2](https://user-images.githubusercontent.com/78191579/138790906-98a32a78-e4ba-454a-82a9-fa8e5d19d0f0.JPG)
+![3](https://user-images.githubusercontent.com/78191579/138790911-f8e4f68f-48f0-4acb-bd00-90c17d96031d.JPG)
+![4](https://user-images.githubusercontent.com/78191579/138790916-ed0b0ae2-1887-4c4e-be86-58e157818cb9.JPG)
 ![exit](https://user-images.githubusercontent.com/78191579/138787754-3dd72d25-e9cd-4a5a-9721-c492f2daad91.JPG)
 
 # Video
