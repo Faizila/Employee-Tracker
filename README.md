@@ -64,6 +64,10 @@ Refer to Video section for walkthrough video links on functionality.
 
 # Video
 
+See a walkthrough video demonstrating the functionality of the application here:
+<br>
+https://github.com/Faizila/Employee-Tracker/blob/main/Assets/video.gif
+
 # Questions
 
 If you have any other questions or comments you can contact me at:
