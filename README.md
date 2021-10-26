@@ -4,14 +4,13 @@ A command line application that allows the user to manipulate data in a SQL data
 
 # Description
 
-Employee Management System is a command line application that allows the user to manipulate data in a SQL database.
+Employee Management System is a command line application that allows the user to view, add, update and delete data in a SQL database.
 
 # Table of Contents
 
 * Built With
 * Installation
 * Usage
-* License
 * Link
 * Screenshots
 * Video
@@ -55,11 +54,6 @@ npm start
 THEN user is prompted with the following options: view all departments, view all roles, view all employees, add department, add role, add employee, update an employee role, view all employees by department, remove department, view department budget and exit.    
 
 ![start](https://user-images.githubusercontent.com/78191579/138712675-5f511926-25b1-4750-980d-3c8a8d729e4a.JPG)
-
-
-# License
-
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 # Link
 
