@@ -66,6 +66,7 @@ THEN user is prompted with the following options: view all departments, view all
 Refer to Video section for walkthrough video links on functionality.
 
 # Screenshots
+![exit](https://user-images.githubusercontent.com/78191579/138787754-3dd72d25-e9cd-4a5a-9721-c492f2daad91.JPG)
 
 # Video
 

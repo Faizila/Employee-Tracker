@@ -169,14 +169,8 @@ function addRole() {
     inquirer
         .prompt([{
                 name: "title",
-                type: "list",
+                type: "input",
                 message: "What is employee's role?",
-                choices: ['Web Developer',
-                          'Accountant',
-                          'Paralegal',
-                          'Manager',
-                          'Engineer',
-                          'Sales Rep']
             },
             {
                 name: "salary",
